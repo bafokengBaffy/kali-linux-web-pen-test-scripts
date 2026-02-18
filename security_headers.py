@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 """
 ULTIMATE SECURITY HEADERS TESTER (50+ Checks)
-Target: http://172.19.64.1:5000
-
 Purpose: This script tests for missing or misconfigured security headers.
 Security headers protect against various attacks like XSS, clickjacking,
 MIME sniffing, and information disclosure.
 
 Author: Security Testing Suite
 Version: 2.0
-Windows Target: 172.19.64.1:5000
 
 Usage: python security_headers.py
-Note: Make sure your server is running on http://172.19.64.1:5000 first
+Note: Update the TARGET variable with your target URL before running
 """
 
 import requests
@@ -25,10 +22,11 @@ from urllib.parse import urlparse
 import warnings
 warnings.filterwarnings('ignore')
 
-# Configuration
-TARGET = "https://career-connect-backend-gp8u.onrender.com"
-TARGET_IP = "172.19.64.1"
-TARGET_PORT = 5000
+# ============================================
+# CONFIGURATION - UPDATE THIS WITH YOUR TARGET
+# ============================================
+TARGET = "https://your-target-url.com"  # <-- CHANGE THIS TO YOUR TARGET
+# ============================================
 
 class SecurityHeadersTester:
     def __init__(self, target_url):
@@ -343,7 +341,6 @@ class SecurityHeadersTester:
             ('https://attacker.com', 'HTTPS malicious'),
             ('http://localhost:9999', 'Different port'),
             ('null', 'Null origin'),
-            ('https://172.19.64.1.evil.com', 'Subdomain attack'),
             ('', 'No origin')
         ]
         
@@ -815,6 +812,22 @@ class SecurityHeadersTester:
 
 def main():
     """Main function"""
+    print("\n" + "=" * 60)
+    print("SECURITY HEADERS TESTER")
+    print("=" * 60)
+    print(f"Target: {TARGET}")
+    print("=" * 60 + "\n")
+    
+    # Validate target is set
+    if TARGET == "https://your-target-url.com":
+        print("⚠️  WARNING: You haven't set your target URL!")
+        print("Please edit the script and set the TARGET variable to your URL.")
+        print("\nExample:")
+        print("  TARGET = \"https://example.com\"")
+        print("  TARGET = \"http://localhost:5000\"")
+        print("  TARGET = \"https://api.yoursite.com\"")
+        return
+    
     tester = SecurityHeadersTester(TARGET)
     tester.run_all_tests()
 
