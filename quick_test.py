@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
 ULTIMATE QUICK SECURITY TESTER (30+ Rapid Tests)
-Target: http://172.19.64.1:5000
+Target: yout target 
 
 Purpose: This script provides a comprehensive security assessment before deep testing.
 It performs 30+ rapid tests to identify obvious security vulnerabilities.
 
 Author: Security Testing Suite
 Version: 2.0
-Windows Target: 172.19.64.1:5000
+Windows Target: your target
 
 Usage: python quick_test.py
-Note: Make sure your server is running on http://172.19.64.1:5000 first
+Note: Make sure your server is running on your target first
 """
 
 import requests
@@ -27,8 +27,8 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Configuration
-TARGET = "http://172.19.64.1:5000"  # Your Windows server
-TARGET_IP = "172.19.64.1"
+TARGET = "your target:5000"  # Your Windows server
+TARGET_IP = " "
 TARGET_PORT = 5000
 
 # Enhanced endpoint list for Windows applications
