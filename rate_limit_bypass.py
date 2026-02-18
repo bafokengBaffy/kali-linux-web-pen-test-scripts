@@ -2,7 +2,6 @@
 """
 ADVANCED RATE LIMIT BYPASS TESTER
 
-
 Purpose: This script tests for rate limit bypass vulnerabilities using 15+ techniques.
 Rate limiting protects against brute force attacks, but can often be bypassed
 using various techniques like IP rotation, slow attacks, and concurrent flooding.
@@ -12,7 +11,7 @@ Version: 2.0
 Date: 2024
 
 Usage: python rate_limit_bypass.py
-Note: Make sure your target server is running first
+Note: Update the TARGET variable with your target server URL before running
 """
 
 import requests
@@ -22,11 +21,13 @@ import string
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ============================================================================
-# CONFIGURATION SECTION
+# CONFIGURATION SECTION - UPDATE THESE VALUES FOR YOUR TARGET
 # ============================================================================
-TARGET = "https://career-connect-backend-gp8u.onrender.com"  # Target server URL
-TARGET_IP = "172.19.64.1"           # Target IP address for network testing
-TARGET_PORT = 5000                  # Target port number
+TARGET = "http://localhost:5000"  # CHANGE THIS: Your target server URL
+# For testing purposes, you can use:
+# - Local development: http://localhost:5000
+# - Test server: https://your-test-server.com
+# - API endpoint: https://api.yourservice.com/v1
 
 # ============================================================================
 # UTILITY FUNCTIONS
@@ -42,7 +43,6 @@ def print_banner():
     print("⏱️  ADVANCED RATE LIMIT BYPASS TESTER")
     print("=" * 80)
     print(f"🎯 TARGET: {TARGET}")
-    print(f"🔍 IP: {TARGET_IP}, PORT: {TARGET_PORT}")
     print("⚠️  Testing rate limit weaknesses with 15+ techniques")
     print("=" * 80)
 
@@ -564,42 +564,9 @@ def test_content_type_variation():
     return results
 
 
-def test_alternative_port_scanning():
-    """
-    Test 10: Port scanning for alternative endpoints.
-    
-    Checks if the server runs on different ports that might have separate
-    rate limits or be unprotected.
-    
-    Returns:
-        list: Test results showing open ports with services
-    """
-    print("\n🔟 [Port Scanning] Checking alternative ports")
-    print("   Testing if server runs on different ports with separate rate limits")
-    
-    ports = [3000, 3001, 3002, 3003, 8080, 8081, 8000, 8001, 80, 443, 5000, 5001]
-    results = []
-    
-    for port in ports:
-        if port == TARGET_PORT:  # Skip main port
-            continue
-            
-        test_url = f"http://{TARGET_IP}:{port}"
-        try:
-            resp = requests.get(test_url, timeout=1)
-            if resp.status_code < 400:
-                print(f"     ⚠️  Service running on port {port}: Status {resp.status_code}")
-                results.append(("Alternative Port", port, "Service found"))
-        except requests.exceptions.RequestException:
-            # Port is closed or not responding
-            pass
-    
-    return results
-
-
 def test_host_variation():
     """
-    Test 11: Host header and alternative host testing.
+    Test 10: Host header and alternative host testing.
     
     Tests if different hostnames or IP addresses bypass rate limits by
     accessing the service through various localhost representations.
@@ -607,25 +574,36 @@ def test_host_variation():
     Returns:
         list: Test results showing accessible host variations
     """
-    print("\n1️⃣1️⃣  [Host Variation] Testing different hosts")
+    print("\n🔟 [Host Variation] Testing different hosts")
     print("   Testing if different hostnames bypass rate limits")
     
+    # Extract base URL without protocol and port
+    base_url = TARGET.replace("http://", "").replace("https://", "")
+    if ":" in base_url:
+        base_url = base_url.split(":")[0]
+    
     hosts = [
-        "localhost",              # Already tested
-        "127.0.0.1",             # Localhost IP
-        "0.0.0.0",               # All interfaces
-        "[::1]",                 # IPv6 localhost
-        "local.host",            # Alternative domain
-        "localhost.localdomain"  # Fully qualified
+        base_url,                    # Original host
+        "localhost",                 # Localhost
+        "127.0.0.1",                 # Localhost IP
+        "0.0.0.0",                   # All interfaces
+        "local.host",                # Alternative domain
     ]
     
     results = []
     
     for host in hosts:
-        if host == "localhost":
+        if host == base_url:
             continue  # Skip already tested
             
-        test_url = f"http://{host}:{TARGET_PORT}"
+        # Construct URL with same protocol and port but different host
+        protocol = "https://" if TARGET.startswith("https") else "http://"
+        port_part = ""
+        if ":" in TARGET.split("://")[-1]:
+            port_part = ":" + TARGET.split(":")[-1]
+        
+        test_url = f"{protocol}{host}{port_part}"
+        
         try:
             resp = requests.get(test_url, timeout=2)
             if resp.status_code < 400:
@@ -640,7 +618,7 @@ def test_host_variation():
 
 def test_request_size_manipulation():
     """
-    Test 12: Request size manipulation testing.
+    Test 11: Request size manipulation testing.
     
     Tests if request size affects rate limiting by sending payloads of
     varying sizes from tiny to extremely large.
@@ -648,7 +626,7 @@ def test_request_size_manipulation():
     Returns:
         list: Test results showing how different payload sizes are handled
     """
-    print("\n1️⃣2️⃣  [Request Size] Testing with different payload sizes")
+    print("\n1️⃣1️⃣  [Request Size] Testing with different payload sizes")
     print("   Testing if request size affects rate limiting")
     
     size_tests = [
@@ -686,7 +664,7 @@ def test_request_size_manipulation():
 
 def test_time_window_exploitation():
     """
-    Test 13: Time window exploitation testing.
+    Test 12: Time window exploitation testing.
     
     Tests how quickly rate limits reset by triggering a rate limit,
     then waiting various intervals and testing if requests are accepted again.
@@ -694,7 +672,7 @@ def test_time_window_exploitation():
     Returns:
         list: Test results showing rate limit reset times
     """
-    print("\n1️⃣3️⃣  [Time Window] Testing rate limit reset")
+    print("\n1️⃣2️⃣  [Time Window] Testing rate limit reset")
     print("   Testing how quickly rate limits reset")
     
     results = []
@@ -744,7 +722,7 @@ def test_time_window_exploitation():
 
 def test_referer_header_manipulation():
     """
-    Test 14: Referer header manipulation.
+    Test 13: Referer header manipulation.
     
     Tests if different Referer headers affect rate limiting by
     simulating requests from various origins and internal pages.
@@ -752,7 +730,7 @@ def test_referer_header_manipulation():
     Returns:
         list: Test results showing Referer header impact
     """
-    print("\n1️⃣4️⃣  [Referer Manipulation] Testing Referer header variations")
+    print("\n1️⃣3️⃣  [Referer Manipulation] Testing Referer header variations")
     print("   Testing if Referer header affects rate limiting")
     
     referers = [
@@ -762,8 +740,6 @@ def test_referer_header_manipulation():
         f"{TARGET}/login",  # Internal page
         f"{TARGET}/",  # Home page
         "https://evil.com",  # Malicious site
-        "data:text/html,<script>alert(1)</script>",  # Data URL
-        "javascript:alert(1)"  # JavaScript URL
     ]
     
     results = []
@@ -794,7 +770,7 @@ def test_referer_header_manipulation():
 
 def test_cookie_manipulation():
     """
-    Test 15: Cookie manipulation testing.
+    Test 14: Cookie manipulation testing.
     
     Tests if different cookies or session IDs affect rate limiting by
     rotating cookies with various values and formats.
@@ -802,7 +778,7 @@ def test_cookie_manipulation():
     Returns:
         list: Test results showing cookie manipulation impact
     """
-    print("\n1️⃣5️⃣  [Cookie Manipulation] Testing cookie variations")
+    print("\n1️⃣4️⃣  [Cookie Manipulation] Testing cookie variations")
     print("   Testing if cookies affect rate limiting")
     
     cookies_list = [
@@ -832,6 +808,55 @@ def test_cookie_manipulation():
             if resp.status_code != 429:
                 results.append(("Cookie Manipulation", cookie_display, f"Status {resp.status_code}"))
                 
+        except requests.exceptions.RequestException:
+            # Skip if request fails
+            pass
+    
+    return results
+
+
+def test_api_version_manipulation():
+    """
+    Test 15: API version manipulation testing.
+    
+    Tests if different API versions have separate rate limits by trying
+    various version patterns in the URL path.
+    
+    Returns:
+        list: Test results showing which API versions are accessible
+    """
+    print("\n1️⃣5️⃣  [API Version] Testing API version variations")
+    print("   Testing if different API versions have separate rate limits")
+    
+    version_variations = [
+        "/api/v1/auth/register",      # v1
+        "/api/v2/auth/register",      # v2
+        "/api/v3/auth/register",      # v3
+        "/api/v1.0/auth/register",    # v1.0
+        "/api/v1.1/auth/register",    # v1.1
+        "/api/v1.2/auth/register",    # v1.2
+        "/api/1/auth/register",       # No 'v' prefix
+        "/api/version/1/auth/register", # 'version' prefix
+        "/api/v1/auth/register/",      # With trailing slash
+        "/api/v1/register",            # Shorter path
+    ]
+    
+    results = []
+    
+    for version_path in version_variations:
+        try:
+            resp = requests.post(
+                f"{TARGET}{version_path}",
+                json={"email": generate_unique_email(), "password": "Test123!", "name": "Version Test"},
+                timeout=2
+            )
+            
+            # If path is accessible (not 404), check if rate limited
+            if resp.status_code != 404:
+                print(f"     {version_path}: Status {resp.status_code}")
+                if resp.status_code != 429:
+                    results.append(("API Version", version_path, f"Status {resp.status_code}"))
+                    
         except requests.exceptions.RequestException:
             # Skip if request fails
             pass
@@ -904,9 +929,16 @@ def main():
     """
     print_banner()  # Display program banner
     
+    # Confirm with user before starting tests
+    print(f"\n⚠️  This script will send multiple requests to: {TARGET}")
+    response = input("Do you have permission to test this target? (yes/no): ")
+    
+    if response.lower() not in ['yes', 'y']:
+        print("Exiting. Please only test systems you have permission to assess.")
+        return
+    
     all_results = []  # Store all test results
     
-    # Execute all 15 rate limit bypass tests
     print("\n🚀 Starting comprehensive rate limit bypass testing...")
     
     # Test 1: Baseline detection
@@ -936,23 +968,23 @@ def main():
     # Test 9: Content-Type variation
     all_results.extend(test_content_type_variation())
     
-    # Test 10: Port scanning
-    all_results.extend(test_alternative_port_scanning())
-    
-    # Test 11: Host variation
+    # Test 10: Host variation
     all_results.extend(test_host_variation())
     
-    # Test 12: Request size manipulation
+    # Test 11: Request size manipulation
     all_results.extend(test_request_size_manipulation())
     
-    # Test 13: Time window exploitation
+    # Test 12: Time window exploitation
     all_results.extend(test_time_window_exploitation())
     
-    # Test 14: Referer header manipulation
+    # Test 13: Referer header manipulation
     all_results.extend(test_referer_header_manipulation())
     
-    # Test 15: Cookie manipulation
+    # Test 14: Cookie manipulation
     all_results.extend(test_cookie_manipulation())
+    
+    # Test 15: API version manipulation
+    all_results.extend(test_api_version_manipulation())
     
     # Generate final report
     generate_final_report(all_results)
