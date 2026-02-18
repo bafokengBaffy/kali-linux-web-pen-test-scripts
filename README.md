@@ -1,216 +1,281 @@
-Security Testing Suite Documentation
+🛡️ Security Testing Suite
+
+Author: Bafokeng Khoali
+Title: Cyber Security Educator | BSc Information Technology
+Organization: Baffy’s Computer Solutions
+Version: 1.0
+Last Updated: February 2026
 
 
-🛡️ ULTIMATE CSRF EXPLOIT TESTER (40+ Tests)
-A comprehensive Cross-Site Request Forgery (CSRF) vulnerability testing tool that checks for 40+ attack vectors and generates proof-of-concept exploit files.
+
+📌 Overview
+
+The Security Testing Suite is a professional-grade collection of automated security assessment tools designed for authorized penetration testing and vulnerability assessment of web applications and APIs.
+
+This suite focuses on identifying common yet critical security weaknesses including:
+
+Cross-Site Request Forgery (CSRF)
+
+Rate Limiting Bypass Vulnerabilities
+
+Missing or Misconfigured Security Headers
+
+Each tool is designed for practical security auditing, red-team simulations, and defensive validation in controlled or authorized environments.
 
 
-📋 Features
+🛡️ 1. Ultimate CSRF Exploit Tester (40+ Tests)
+
+A comprehensive CSRF vulnerability assessment tool that evaluates over 40 attack vectors and automatically generates proof-of-concept exploit files.
+
+🔎 Key Capabilities
+
 40+ CSRF attack vector tests
 
 GET-based CSRF detection
 
-Origin/Referer header validation bypass testing
+Origin and Referer header validation bypass testing
 
 Content-Type validation bypass
 
-JSON CSRF attacks
+JSON-based CSRF attacks
 
 CORS misconfiguration testing
 
 Cookie security analysis
 
-CSRF token implementation testing
+CSRF token implementation analysis
 
-Double-submit cookie pattern testing
+Double-submit cookie pattern validation
 
 HTTP method confusion attacks
 
 Flash CSRF via crossdomain.xml
 
-Automatic exploit generation (5 different PoC files)
+Automatic exploit generation (5 PoC files)
 
 🚀 Usage
-bash
-# 1. Update the target in the script
-# Edit the TARGET variable at the top of the file
+# Step 1: Update target URL inside the script
+# Modify the TARGET variable at the top of the file
 
-# 2. Run the tester
+# Step 2: Run the tool
 python3 csrf_exploit.py
 
-# 3. Review generated exploit files
-# The script creates 5 HTML files in the current directory:
-# - csrf_basic.html
-# - csrf_advanced.html
-# - csrf_clickjacking.html
-# - csrf_json.html
-# - csrf_stealth.html
-📊 Generated Report
-The script generates:
+# Step 3: Review generated exploit files
 
-JSON results file (csrf_results.json)
+📂 Generated Files
 
-5 HTML exploit files for testing
+csrf_results.json
 
-Detailed console report with findings and recommendations
+csrf_basic.html
 
-⏱️ ADVANCED RATE LIMIT BYPASS TESTER (15+ Techniques)
-A comprehensive tool for testing rate limit implementations using 15+ bypass techniques including IP rotation, slow attacks, and concurrent flooding.
+csrf_advanced.html
 
-📋 Features
+csrf_clickjacking.html
+
+csrf_json.html
+
+csrf_stealth.html
+
+📊 Output Report
+
+JSON structured results
+
+5 HTML exploit proof-of-concept files
+
+Detailed console findings
+
+Risk classification and mitigation guidance
+
+⏱️ 2. Advanced Rate Limit Bypass Tester (15+ Techniques)
+
+A comprehensive rate-limiting security assessment tool that evaluates over 15 bypass techniques including header manipulation, concurrency abuse, and timing exploitation.
+
+🔎 Key Capabilities
+
 Baseline rate limit detection
 
-IP rotation simulation (X-Forwarded-For, X-Real-IP headers)
+IP rotation simulation (X-Forwarded-For, X-Real-IP)
 
-Slowloris-style attacks (2-10 second intervals)
+Slow attack simulation (2–10 second intervals)
 
 Concurrent request flooding (ThreadPoolExecutor)
 
-User-Agent rotation (20+ browser/mobile/bot UAs)
+User-Agent rotation (20+ profiles)
 
-Path variation attacks (trailing slashes, encoding, case)
+Path variation and encoding attacks
 
 Parameter case variation
 
-HTTP method variation (PUT, PATCH, DELETE)
+HTTP method manipulation (PUT, PATCH, DELETE)
 
-Content-Type header manipulation
+Content-Type header tampering
 
 Host header variation
 
-Request size manipulation (tiny to huge payloads)
+Request size manipulation
 
-Time window exploitation (reset timing)
+Time window exploitation
 
 Referer header manipulation
 
-Cookie manipulation
+Cookie tampering
 
 API version manipulation
 
 🚀 Usage
-bash
-# 1. Update the target in the script
-# Edit the TARGET variable at the top of the file
+# Step 1: Set target URL in script
+# Modify the TARGET variable
 
-# 2. Run the tester
+# Step 2: Execute
 python3 rate_limit_bypass.py
 
-# 3. Review findings
-# The script provides a comprehensive report with bypass techniques that worked
-📊 Generated Report
-Console output with real-time test results
+📊 Output Report
 
-Final report with categorized findings
+Real-time console results
 
-Security recommendations based on discovered vulnerabilities
+Categorized bypass findings
 
-🔒 ULTIMATE SECURITY HEADERS TESTER (50+ Checks)
-A comprehensive security headers testing tool that checks for missing or misconfigured security headers, protecting against XSS, clickjacking, MIME sniffing, and information disclosure.
+Identified weaknesses
 
-📋 Features
-50+ security header checks
+Security hardening recommendations
 
-Basic security headers (CSP, HSTS, X-Frame-Options, etc.)
+🔒 3. Ultimate Security Headers Tester (50+ Checks)
 
-Detailed CSP analysis with directive scoring
+A professional-grade HTTP security header analyzer performing over 50 checks against best practice standards.
 
-Cookie security analysis (Secure, HttpOnly, SameSite)
+🔎 Key Capabilities
 
-CORS configuration testing
+50+ security header validations
+
+Content Security Policy (CSP) analysis and scoring
+
+HTTP Strict Transport Security (HSTS) validation
+
+X-Frame-Options analysis
+
+X-Content-Type-Options validation
+
+Referrer-Policy checks
+
+Cookie security flags analysis (Secure, HttpOnly, SameSite)
+
+CORS configuration assessment
 
 Information disclosure detection
 
-Transport security analysis (TLS versions, certificate)
+TLS version and certificate validation
 
-Cross-origin policy testing (COOP, COEP, CORP)
+Cross-Origin Policy testing (COOP, COEP, CORP)
 
-Cache control analysis for sensitive endpoints
-
-Miscellaneous security headers
+Cache-Control review for sensitive endpoints
 
 🚀 Usage
-bash
-# 1. Update the target in the script
-# Edit the TARGET variable at the top of the file
-
-# 2. Run the tester
+# Step 1: Update TARGET variable
+# Step 2: Run the tool
 python3 security_headers.py
 
-# 3. Review findings
-# The script provides a detailed security score and recommendations
-📊 Generated Report
-JSON results file (security_headers_results.json)
+📊 Output Report
 
-Security score (0-100%)
+security_headers_results.json
 
-Vulnerability breakdown by severity
+Security score (0–100%)
 
-Detailed findings with specific issues
+Vulnerability severity breakdown
 
-Actionable recommendations for fixes
+Actionable remediation guidance
 
 📁 Project Structure
-text
 security-testing-suite/
-├── csrf_exploit.py          # CSRF testing tool (40+ tests)
-├── rate_limit_bypass.py      # Rate limit bypass tester (15+ techniques)
-├── security_headers.py       # Security headers tester (50+ checks)
-├── README.md                 # This documentation file
-├── csrf_results.json         # Generated CSRF test results
-├── csrf_basic.html           # Generated basic CSRF exploit
-├── csrf_advanced.html        # Generated advanced CSRF exploit
-├── csrf_clickjacking.html    # Generated clickjacking exploit
-├── csrf_json.html            # Generated JSON CSRF exploit
-├── csrf_stealth.html         # Generated stealth CSRF exploit
-└── security_headers_results.json # Generated security headers results
+├── csrf_exploit.py
+├── rate_limit_bypass.py
+├── security_headers.py
+├── README.md
+├── csrf_results.json
+├── csrf_basic.html
+├── csrf_advanced.html
+├── csrf_clickjacking.html
+├── csrf_json.html
+├── csrf_stealth.html
+└── security_headers_results.json
+
 ⚙️ Configuration
-CSRF Exploit Tester
-python
-TARGET = "your own target"  # Set your target URL
-Rate Limit Bypass Tester
-python
-TARGET = "http://localhost:5000"  # Set your target URL
-Security Headers Tester
-python
-TARGET = "https://your-target-url.com"  # Set your target URL
+
+Each script requires setting a target:
+
+TARGET = "https://your-authorized-target.com"
+
+
+Only test applications you own or have explicit written authorization to assess.
+
 🛠️ Requirements
-bash
 pip install requests
-All scripts use only the requests library for HTTP communications.
 
-⚠️ Legal & Ethical Warning
-IMPORTANT: These tools are for authorized security testing only. Only use them on:
 
-Your own applications
+All tools are built using Python 3 and the requests library for HTTP communication.
 
-Applications you have explicit permission to test
+⚖️ Legal & Ethical Notice
 
-Test environments
+⚠️ IMPORTANT
 
-Unauthorized testing may violate:
+These tools are strictly intended for:
+
+Applications you own
+
+Systems you have written authorization to test
+
+Approved staging or testing environments
+
+Unauthorized security testing may violate:
 
 Computer Fraud and Abuse Act (CFAA)
 
-GDPR and privacy laws
+GDPR and data protection laws
 
-Terms of service
+Terms of service agreements
 
-Local and international laws
+Local and international cybersecurity laws
 
-Always obtain written permission before testing any system you don't own.
+The author assumes no liability for misuse.
 
-📚 Additional Resources
-OWASP CSRF Prevention Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+Always obtain written authorization before conducting any form of security testing.
 
-OWASP Rate Limiting Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html
+📚 References & Standards
 
-OWASP Security Headers: https://owasp.org/www-project-secure-headers/
+OWASP CSRF Prevention Cheat Sheet
 
-Mozilla Observatory: https://observatory.mozilla.org/
+OWASP Denial of Service & Rate Limiting Guidelines
+
+OWASP Secure Headers Project
+
+Mozilla Observatory
+
+👨‍💻 About the Author
+
+Bafokeng Khoali
+Cyber Security Educator
+BSc Information Technology
+Founder – Baffy’s Computer Solutions
+
+Specializing in:
+
+Web Application Security
+
+API Security Testing
+
+Ethical Hacking
+
+Secure Software Development
+
+Backend Security Architecture
 
 📝 License
-These tools are provided for educational and authorized security testing purposes only. Use responsibly and ethically.
 
-🤝 Contributing
-Feel free to submit issues, feature requests, or pull requests to improve these security testing tools.
+This project is provided for:
+
+Educational use
+
+Research purposes
+
+Authorized penetration testing
+
+Use responsibly and ethically.
