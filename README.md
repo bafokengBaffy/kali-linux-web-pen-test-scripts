@@ -1,9 +1,14 @@
 🛡️ Security Testing Suite
 
 Author: Bafokeng Khoali
+
 Title: Cyber Security Educator | BSc Information Technology
+
+
 Organization: Baffy’s Computer Solutions
+
 Version: 1.0
+
 Last Updated: February 2026
 
 
